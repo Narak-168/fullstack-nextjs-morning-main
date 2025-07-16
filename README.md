@@ -20,12 +20,12 @@ This repository is dedicated to:
 - **API Routes** – Backend logic within Next.js (optional)
 
 ## 📁 Structure
-├── components/ # Reusable UI components
-├── pages/ # Application routes
-├── public/ # Static assets
-├── styles/ # Global and modular styles
-├── utils/ # Utility functions
-└── README.md # Project overview
+- **components** - Reusable UI components
+- **pages** - Application routes
+- **public** - Static assets
+- **styles** - Global and modular styles
+- **utils** - Utility functions
+- **README.md** - Project overview
 
 ## 📌 Features
 
