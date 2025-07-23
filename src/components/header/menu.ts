@@ -1,6 +1,6 @@
 import { NavbarType } from "@/types/navType";
 
-export const navLink: NavbarType[] = [
+export const MenuList: NavbarType[] = [
     {
         path: '/',
         name: 'Home',

@@ -1,117 +1,56 @@
-'use client';
-
-import Link from "next/link";
-import { navLink } from "./menu";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
-import { Button } from "../ui/button";
-import { Badge, ShoppingCart } from "lucide-react";
-import { useAppSelector } from "@/lib/hook";
+'use client'
+import Link from 'next/link'
+import React, { useState } from 'react'
+import { usePathname } from 'next/navigation';
+import { MenuItem } from '@/types/menuType';
+import { MenuList } from './menu';
+import { ShoppingCart } from 'lucide-react';
+import { Badge } from '../ui/badge'; // Adjust the path if your Badge component is elsewhere
+import { Button } from '../ui/button';
+import { useAppSelector } from '@/lib/hook';
 
 export default function NavbarComponent() {
     const pathname = usePathname();
-    const { itemsCount } = useAppSelector((state) => state.cart) // Total items in cart
-    useEffect(() => {
-        const toggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
+    const [menu] = useState<MenuItem[]>(MenuList);
+    const { itemCount } = useAppSelector((state) => state.cart) // Total items in cart
 
-        if (toggle && mobileMenu) {
-            const handleClick = () => {
-                mobileMenu.classList.toggle('hidden');
-            };
-            toggle.addEventListener('click', handleClick);
-
-            // Cleanup event listener on unmount
-            return () => {
-                toggle.removeEventListener('click', handleClick);
-            };
-        }
-    }, []);
     return (
-        <nav className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-lg">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-16 items-center">
-                    {/* <!-- Logo --> */}
-                    <div className="flex-shrink-0 text-white text-2xl font-bold">
-                        MyBrand
-                    </div>
-
-                    {/* <!-- Desktop Menu --> */}
-                    <div className="hidden md:flex space-x-6 text-white font-medium">
-                        {
-                            navLink.map((item, index) => (
-                                <Link
-                                    key={index}
-                                    href={item.path}
-                                    className={`${pathname === item.path ? 'text-amber-300' : ''}hover:text-yellow-300 transition`}>
-                                    {item.name}
-                                </Link>
-                            ))
-                        }
-                    </div>
-
-                    {/* <!-- Desktop Button --> */}
-                    <div className="hidden md:block">
-                        <Link href="#" className="bg-white text-indigo-700 px-4 py-2 rounded-xl hover:bg-yellow-300 transition-all font-semibold">
-                            Get Started
-                        </Link>
-                        {/* Cart Button with Badge */}
-                        <Link href="/cart">
-                            <Button variant="ghost" size="icon" className="relative">
-                                <ShoppingCart className=" bg-white"  />
-                                {/* Show badge only if there are items in cart */}
-                                {itemsCount > 0 && (
-                                    <Badge
-                                        fontVariant="destructive"
-                                        className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
-                                    >
-                                        {itemsCount}
-                                    </Badge>
-                                )}
-                            </Button>
-                        </Link>
-                    </div>
-
-                    {/* <!-- Mobile Menu Button --> */}
-                    <div className="md:hidden">
-                        <button id="menu-toggle" className="text-white focus:outline-none text-2xl">
-                            ☰
-                        </button>
-                    </div>
-                </div>
+        <nav className="lg:px-12 lg:h-20 px-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 flex flex-wrap items-center  shadow-md">
+            <div className="flex-1 flex justify-between items-center">
+                <Link href="/" className="text-xl text-white">Company</Link>
             </div>
 
-            {/* <!-- Mobile Menu --> */}
-            <div id="mobile-menu" className="md:hidden hidden px-4 pb-4 space-y-2 text-white font-medium">
-                {
-                    navLink.map((item, index) => (
-                        <Link
-                            key={index}
-                            href={item.path}
-                            className={`${pathname === item.path ? 'text-black' : ''}hover:text-yellow-300 transition`}>
-                            {item.name}
-                        </Link>
-                    ))
-                }
-
-                <Link href="#" className="block bg-white text-indigo-700 text-center px-4 py-2 rounded-xl hover:bg-yellow-300 transition-all font-semibold mt-2">
-                    Get Started
-                </Link>
-                {/* Cart Button with Badge */}
-               <Link href="/cart">
-                            <Button variant="ghost" size="icon" className="relative">
-                                <ShoppingCart className="h-5 w-5" />
-                                {/* Show badge only if there are items in cart */}
-                                {itemsCount > 0 && (
-                                    <Badge
-                                        fontVariant="destructive"
-                                        className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
-                                    >
-                                        {itemsCount}
-                                    </Badge>
-                                )}
-                            </Button>
-                        </Link>
+            <div className="hidden md:flex md:items-cente md:w-auto w-full" id="menu">
+                <nav>
+                    <ul className="md:flex items-center justify-between text-base text-white pt-6 md:pt-0">
+                        {menu.map((item, index) => (
+                            <li key={index}>
+                                <Link
+                                    className={`md:p-4 py-3 px-0 block ${pathname === item.path ? 'font-bold' : ''}`}
+                                    href={item.path}
+                                >
+                                    {item.name}
+                                </Link>
+                            </li>
+                        ))}
+                        {/* Cart Button with Badge */}
+                    <Link href="/cart">
+                        <Button variant="ghost" size="icon" className="relative">
+                            <ShoppingCart className="h-5 w-5" />
+                            {/* Show badge only if there are items in cart */}
+                            {itemCount > 0 && (
+                                <Badge
+                                    variant="destructive"
+                                    className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0  text-xs"
+                                >
+                                    {itemCount}
+                                </Badge>
+                            )}
+                        </Button>
+                    </Link>
+                    </ul>
+                    
+                </nav>
             </div>
         </nav>
     )

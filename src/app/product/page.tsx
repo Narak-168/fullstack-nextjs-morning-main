@@ -1,34 +1,38 @@
-import ProductCard from '@/components/product/ProductCard';
-import React from 'react'
-import { ProductType } from '@/types/productType';
-import Link from 'next/link';
+"use client"
 
-export default async function page() {
-  const res = await fetch(`${process.env.BASE_URL_API}products`);
-  if (!res.ok) {
-    throw new Error('Failed to fetch products');
+import ProductCard from "@/components/product/ProductCard" // Corrected import path
+import type { ProductType } from "@/types/productType" // Assuming this path is correct
+import { useGetProductsQuery } from "@/lib/api/productsApi" // Assuming this path is correct
+import Loading from "../loading" // Assuming this path is correct
+
+export default function Page() {
+  const { data, isLoading, error } = useGetProductsQuery()
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <Loading />
+      </div>
+    )
   }
-  const data = await res.json();
-  const products: ProductType[] = data.products;
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <p className="text-red-500 text-center text-lg">Failed to load products. Please try again later.</p>
+      </div>
+    )
+  }
+
+  const products = data?.products as ProductType[]
 
   return (
-    <section className='w-[90%] mx-auto my-10'>
-      <h2 className='font-bold text-[24px] text-blue-500 uppercase'>Product Page</h2>
-      <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4'>
-        {
-          products.map((product) => (
-            <Link key={product.id} href={`/product/${product.id}`} className='no-underline'>
-              <ProductCard
-                id={product.id}
-                title={product.title}
-                description={product.description}
-                price={product.price}
-                thumbnail={product.thumbnail}
-                category={product.category}
-              />
-            </Link>
-          ))
-        }
+    <section className="container mx-auto px-4 py-10">
+      <h2 className="font-extrabold text-4xl text-center text-gray-800 uppercase mb-8">Our Products</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {products.map((product: ProductType) => (
+          <ProductCard product={product} key={product.id} />
+        ))}
       </div>
     </section>
   )

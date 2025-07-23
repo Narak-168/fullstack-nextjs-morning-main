@@ -13,13 +13,13 @@ export interface CartItem {
 type CartState = {
     items: CartItems[]
     total: number
-    itemsCount: number
+    itemCount: number
 }
 
 const initialState: CartState = {
     items: [],
     total: 0,
-    itemsCount: 0,
+    itemCount: 0,
 }
 const cartSlice = createSlice({
   name: "cart",
@@ -63,10 +63,10 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = []
       state.total = 0
-      state.itemsCount = 0
+      state.itemCount = 0
     },
     calculateTotals: (state) => {
-      state.itemsCount = state.items.reduce((total, item) => total + item.quantity, 0)
+      state.itemCount = state.items.reduce((total, item) => total + item.quantity, 0)
       state.total = state.items.reduce((total, item) => total + item.price * item.quantity, 0)
     },
   },

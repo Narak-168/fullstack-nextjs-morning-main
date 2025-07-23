@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
 export default function CartSummary() {
-  const { total, itemsCount } = useAppSelector((state) => state.cart)
+  const { total, itemCount } = useAppSelector((state) => state.cart)
 
   const shipping = total > 50 ? 0 : 9.99
   const tax = total * 0.08
@@ -19,7 +19,7 @@ export default function CartSummary() {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex justify-between">
-          <span>Subtotal ({itemsCount} items)</span>
+          <span>Subtotal ({itemCount} items)</span>
           <span>${total.toFixed(2)}</span>
         </div>
 

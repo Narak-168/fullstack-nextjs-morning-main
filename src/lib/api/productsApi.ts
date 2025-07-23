@@ -17,6 +17,7 @@ export const productsApi = createApi({
             providesTags: (result, error, id) => [{ type: "Product", id }],
         }),
     })
+
 })
 
 export const {
