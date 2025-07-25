@@ -4,6 +4,7 @@ export type UserType = {
     lastName: string;
     username: string;
     email: string;
+    avatar: string;
     image: string;
     age: number;
     gender?: string;
