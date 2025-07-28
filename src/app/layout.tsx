@@ -8,6 +8,8 @@ import Error from "./error";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import NavbarWrapper from "@/components/header/NavbarWrapper";
 import { Providers } from "@/lib/Providers";
+import Script from 'next/script'
+import { Analytics } from './analytic'
 
 const ubuntu = Ubuntu({
   variable: "--font-ubuntu",
@@ -91,6 +93,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Google Analytics Script */}
+          <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+          strategy="afterInteractive"
+          />
+          <Script id=
+          "google-analytics" strategy="afterInteractive">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+          `}
+          </Script>
+      </head>
       <body
         className={`${ubuntu.variable} ${suwannaphum.variable} antialiased`}
       >
@@ -99,6 +117,7 @@ export default function RootLayout({
           
           <Suspense fallback={<Loading />}>
           <NavbarWrapper />
+          <Analytics />
             {children}
           </Suspense>
         </ErrorBoundary>
