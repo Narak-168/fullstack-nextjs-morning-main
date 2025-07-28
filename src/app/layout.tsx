@@ -67,9 +67,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Home | FullStack Morning",
     description: "A simple Next.js app with TypeScript, Tailwind CSS, and Geist UI",
-    url: "https://fullstack-nextjs-morning.vercel.app/",
+    url: "https://fullstack-nextjs-morning-main.vercel.app/",
     siteName: "FullStack Morning",
-    images: "https://media.licdn.com/dms/image/v2/C5612AQFxx3XzXO9Vew/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1583841493429?e=2147483647&v=beta&t=nOghzOBbkw7pVweJUyiUzSYZtqz8l5EPsdHcnWvy-DU",
+    images: "https://canto-wp-media.s3.amazonaws.com/app/uploads/2020/04/19185944/metadata-1.jpg",
     locale: "en_US",
     type: "website",
   },
