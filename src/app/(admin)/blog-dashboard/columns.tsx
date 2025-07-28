@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { BlogType } from "@/types/blogtType"
-import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { BlogType } from "@/types/blogType";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<BlogType>[] = [
   {
@@ -26,7 +26,7 @@ export const columns: ColumnDef<BlogType>[] = [
           Title
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
   },
   {
@@ -37,6 +37,5 @@ export const columns: ColumnDef<BlogType>[] = [
         {row.getValue("body")}
       </div>
     ),
-
   },
-]
+];
